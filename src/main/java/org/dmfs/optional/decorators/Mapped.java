@@ -28,13 +28,13 @@ import java.util.NoSuchElementException;
  *
  * @author Gabor Keszthelyi
  */
-public final class Mapped<FROM, TO> implements Optional<TO>
+public final class Mapped<From, To> implements Optional<To>
 {
-    private final Optional<FROM> mFromValue;
-    private final Function<FROM, TO> mConversion;
+    private final Optional<From> mFromValue;
+    private final Function<From, To> mConversion;
 
 
-    public Mapped(Function<FROM, TO> conversion, Optional<FROM> fromValue)
+    public Mapped(Function<From, To> conversion, Optional<From> fromValue)
     {
         mConversion = conversion;
         mFromValue = fromValue;
@@ -49,14 +49,14 @@ public final class Mapped<FROM, TO> implements Optional<TO>
 
 
     @Override
-    public TO value(TO defaultValue)
+    public To value(To defaultValue)
     {
         return mFromValue.isPresent() ? value() : defaultValue;
     }
 
 
     @Override
-    public TO value() throws NoSuchElementException
+    public To value() throws NoSuchElementException
     {
         return mConversion.apply(mFromValue.value());
     }
