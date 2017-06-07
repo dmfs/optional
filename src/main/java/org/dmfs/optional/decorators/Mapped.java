@@ -51,7 +51,7 @@ public final class Mapped<FROM, TO> implements Optional<TO>
     @Override
     public TO value(TO defaultValue)
     {
-        return mFromValue.isPresent() ? mConversion.apply(mFromValue.value()) : defaultValue;
+        return mFromValue.isPresent() ? value() : defaultValue;
     }
 
 
