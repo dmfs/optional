@@ -23,11 +23,8 @@ import org.dmfs.optional.Optional;
 import org.dmfs.optional.Present;
 import org.junit.Test;
 
-import java.util.Iterator;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.Matchers.contains;
+import static org.junit.Assert.assertThat;
 
 
 /**
@@ -42,7 +39,7 @@ public final class PresentValuesTest
 
 
     @Test
-    public void test_various()
+    public void test()
     {
         Iterable<Optional<String>> optionals = new ArrayIterable<>(
                 new Present<>("1"),
@@ -54,16 +51,8 @@ public final class PresentValuesTest
         );
 
         PresentValues<String> result = new PresentValues<>(optionals);
-        Iterator<String> resultIterator = result.iterator();
 
-        assertTrue(resultIterator.hasNext());
-        assertEquals("1", resultIterator.next());
-        assertTrue(resultIterator.hasNext());
-        assertEquals("2", resultIterator.next());
-        assertTrue(resultIterator.hasNext());
-        assertEquals("3", resultIterator.next());
-
-        assertFalse(resultIterator.hasNext());
+        assertThat(result, contains("1", "2", "3"));
     }
 
 }
