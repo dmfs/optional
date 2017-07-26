@@ -19,8 +19,7 @@ package org.dmfs.optional.iterator;
 
 import org.dmfs.iterators.AbstractBaseIterator;
 import org.dmfs.iterators.Filter;
-import org.dmfs.iterators.Function;
-import org.dmfs.iterators.decorators.Fluent;
+import org.dmfs.iterators.decorators.Filtered;
 import org.dmfs.optional.Optional;
 
 import java.util.Iterator;
@@ -33,28 +32,19 @@ import java.util.Iterator;
  */
 public final class PresentValues<E> extends AbstractBaseIterator<E>
 {
-    private final Iterator<E> mDelegate;
+    private final Iterator<Optional<E>> mDelegate;
 
 
     public PresentValues(Iterator<Optional<E>> optionals)
     {
-        mDelegate = new Fluent<>(optionals)
-                .filtered(new Filter<Optional<E>>()
-                {
-                    @Override
-                    public boolean iterate(Optional<E> optional)
-                    {
-                        return optional.isPresent();
-                    }
-                })
-                .mapped(new Function<Optional<E>, E>()
-                {
-                    @Override
-                    public E apply(Optional<E> optional)
-                    {
-                        return optional.value();
-                    }
-                });
+        mDelegate = new Filtered<>(optionals, new Filter<Optional<E>>()
+        {
+            @Override
+            public boolean iterate(Optional<E> argument)
+            {
+                return argument.isPresent();
+            }
+        });
     }
 
 
@@ -68,6 +58,6 @@ public final class PresentValues<E> extends AbstractBaseIterator<E>
     @Override
     public E next()
     {
-        return mDelegate.next();
+        return mDelegate.next().value();
     }
 }
