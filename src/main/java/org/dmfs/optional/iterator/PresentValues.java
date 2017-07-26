@@ -26,7 +26,7 @@ import java.util.Iterator;
 
 
 /**
- * {@link Iterator<E>} that iterates over the present values from the input {@link Iterator<Optional<E>>}.
+ * {@link Iterator} that iterates over the present values from the input {@link Iterator} of {@link Optional}s of {@code E}.
  *
  * @author Gabor Keszthelyi
  */
