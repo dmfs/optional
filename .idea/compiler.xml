@@ -2,6 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="optional-testing_main" target="1.7" />
+      <module name="optional-testing_test" target="1.7" />
       <module name="optional_main" target="1.7" />
       <module name="optional_test" target="1.7" />
     </bytecodeTargetLevel>

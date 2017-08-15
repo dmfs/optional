@@ -20,9 +20,11 @@ package org.dmfs.optional;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 
-import static junit.framework.TestCase.*;
+import static junit.framework.TestCase.assertEquals;
+import static org.dmfs.optional.hamcrest.AbsentMatcher.isAbsent;
+import static org.dmfs.optional.hamcrest.PresentMatcher.isPresent;
+import static org.junit.Assert.assertThat;
 
 
 /**
@@ -33,29 +35,14 @@ public class FirstTest
     @Test
     public void testIsPresent() throws Exception
     {
-        assertFalse(new First<>(Arrays.asList()).isPresent());
-        assertTrue(new First<>(Arrays.asList("test")).isPresent());
-        assertTrue(new First<>(Arrays.asList("test", "test123")).isPresent());
-    }
-
-
-    @Test(expected = NoSuchElementException.class)
-    public void testAbsentValue() throws Exception
-    {
-        new First<>(Arrays.asList()).value();
+        assertThat(new First<>(Arrays.asList()), isAbsent());
+        assertThat(new First<>(Arrays.asList("test")), isPresent("test"));
+        assertThat(new First<>(Arrays.asList("test", "test123")), isPresent("test"));
     }
 
 
     @Test
-    public void testValue() throws Exception
-    {
-        assertEquals("test", new First<>(Arrays.asList("test")).value());
-        assertEquals("test", new First<>(Arrays.asList("test", "test123")).value());
-    }
-
-
-    @Test
-    public void testValue1() throws Exception
+    public void testValueWithDefault() throws Exception
     {
         assertEquals("xyz", new First<>(Arrays.asList()).value("xyz"));
         assertEquals("test", new First<>(Arrays.asList("test")).value("xyz"));

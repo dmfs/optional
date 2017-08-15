@@ -15,34 +15,27 @@
  * limitations under the License.
  */
 
-package org.dmfs.optional;
+package org.dmfs.optional.hamcrest;
 
+import org.dmfs.optional.Absent;
+import org.dmfs.optional.Present;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.Description;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertEquals;
-import static org.dmfs.optional.hamcrest.AbsentMatcher.isAbsent;
-import static org.dmfs.optional.hamcrest.PresentMatcher.isPresent;
 import static org.junit.Assert.assertThat;
 
 
 /**
- * @author Marten Gajda
+ * @author marten
  */
-public class NullSafeTest
+public class AbsentMatcherTest
 {
     @Test
-    public void testIsPresent() throws Exception
+    public void testMatchesSafely() throws Exception
     {
-        assertThat(new NullSafe<>(null), isAbsent());
-        assertThat(new NullSafe<>("test"), isPresent("test"));
-    }
-
-
-    @Test
-    public void testValue1() throws Exception
-    {
-        assertEquals("xyz", new NullSafe<>(null).value("xyz"));
-        assertEquals("test", new NullSafe<>("test").value("xyz"));
+        assertThat(new AbsentMatcher().matchesSafely(Absent.absent(), new Description.NullDescription()), CoreMatchers.is(true));
+        assertThat(new AbsentMatcher().matchesSafely(new Present<>("test"), new Description.NullDescription()), CoreMatchers.is(false));
     }
 
 }
