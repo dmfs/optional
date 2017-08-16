@@ -98,4 +98,44 @@ public final class PresentValuesTest
         assertFalse(result.hasNext());
     }
 
+
+    public void test_Ctors()
+    {
+        assertFalse(new PresentValues<>().hasNext());
+        assertFalse(new PresentValues<>(Absent.absent()).hasNext());
+        assertFalse(new PresentValues<>(Absent.absent(), Absent.absent()).hasNext());
+    }
+
+
+    @Test
+    public void test_whenOnePresentValue_ctors()
+    {
+        PresentValues<String> result = new PresentValues<>(new Present<>("hello"));
+
+        assertTrue(result.hasNext());
+        assertEquals("hello", result.next());
+        assertFalse(result.hasNext());
+    }
+
+
+    @Test
+    public void test_various_Ctors()
+    {
+        PresentValues<String> result = new PresentValues<>(new Present<>("1"),
+                ABSENT,
+                ABSENT,
+                new Present<>("2"),
+                new Present<>("3"),
+                ABSENT);
+
+        assertTrue(result.hasNext());
+        assertEquals("1", result.next());
+        assertTrue(result.hasNext());
+        assertEquals("2", result.next());
+        assertTrue(result.hasNext());
+        assertEquals("3", result.next());
+
+        assertFalse(result.hasNext());
+    }
+
 }

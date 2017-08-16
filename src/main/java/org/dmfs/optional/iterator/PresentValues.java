@@ -18,7 +18,9 @@
 package org.dmfs.optional.iterator;
 
 import org.dmfs.iterators.AbstractBaseIterator;
+import org.dmfs.iterators.ArrayIterator;
 import org.dmfs.iterators.Filter;
+import org.dmfs.iterators.SingletonIterator;
 import org.dmfs.iterators.decorators.Filtered;
 import org.dmfs.optional.Optional;
 
@@ -29,10 +31,24 @@ import java.util.Iterator;
  * {@link Iterator} that iterates over the present values from the input {@link Iterator} of {@link Optional}s of {@code E}.
  *
  * @author Gabor Keszthelyi
+ * @author Marten Gajda
  */
 public final class PresentValues<E> extends AbstractBaseIterator<E>
 {
     private final Iterator<Optional<E>> mDelegate;
+
+
+    public PresentValues(Optional<E> optional)
+    {
+        this(new SingletonIterator<>(optional));
+    }
+
+
+    @SafeVarargs
+    public PresentValues(Optional<E>... optionals)
+    {
+        this(new ArrayIterator<>(optionals));
+    }
 
 
     public PresentValues(Iterator<Optional<E>> optionals)
