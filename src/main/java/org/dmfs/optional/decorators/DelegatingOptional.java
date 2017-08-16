@@ -60,25 +60,4 @@ public abstract class DelegatingOptional<T> implements Optional<T>
     {
         return mDelegate.value();
     }
-
-
-    @Override
-    public final int hashCode()
-    {
-        return mDelegate.hashCode();
-    }
-
-
-    @Override
-    public final boolean equals(Object other)
-    {
-        return mDelegate.equals(other);
-    }
-
-
-    @Override
-    public final String toString()
-    {
-        return mDelegate.toString();
-    }
 }
