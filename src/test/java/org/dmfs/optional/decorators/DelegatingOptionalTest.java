@@ -24,6 +24,8 @@ import org.junit.Test;
 
 import java.util.NoSuchElementException;
 
+import static org.dmfs.optional.hamcrest.AbsentMatcher.isAbsent;
+import static org.dmfs.optional.hamcrest.PresentMatcher.isPresent;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
@@ -33,27 +35,13 @@ import static org.junit.Assert.fail;
 /**
  * @author Marten Gajda
  */
-public class DelegatingTest
+public class DelegatingOptionalTest
 {
     @Test
     public void testIsPresent() throws Exception
     {
-        assertThat(new TestOptional<>(new Absent<>()).isPresent(), is(false));
-        assertThat(new TestOptional<>(new Present<>("test")).isPresent(), is(true));
-    }
-
-
-    @Test
-    public void testValue() throws Exception
-    {
-        assertThat(new TestOptional<>(new Present<>("test")).value(), is("test"));
-    }
-
-
-    @Test(expected = NoSuchElementException.class)
-    public void testAbsentValue() throws Exception
-    {
-        new TestOptional<>(new Absent<>()).value();
+        assertThat(new TestOptional<>(new Absent<>()), isAbsent());
+        assertThat(new TestOptional<>(new Present<>("test")), isPresent("test"));
     }
 
 
@@ -217,7 +205,7 @@ public class DelegatingTest
     }
 
 
-    private final class TestOptional<T> extends Delegating<T>
+    private final class TestOptional<T> extends DelegatingOptional<T>
     {
         public TestOptional(Optional<T> delegate)
         {
