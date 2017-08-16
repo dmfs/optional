@@ -22,14 +22,10 @@ import org.dmfs.optional.Optional;
 import org.dmfs.optional.Present;
 import org.junit.Test;
 
-import java.util.NoSuchElementException;
-
 import static org.dmfs.optional.hamcrest.AbsentMatcher.isAbsent;
 import static org.dmfs.optional.hamcrest.PresentMatcher.isPresent;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 
 
 /**
@@ -51,159 +47,7 @@ public class DelegatingOptionalTest
         assertThat(new TestOptional<>(new Present<>("test")).value("default"), is("test"));
         assertThat(new TestOptional<>(new Absent<String>()).value("default"), is("default"));
     }
-
-
-    @Test
-    public void testHashCode() throws Exception
-    {
-        assertThat(new TestOptional<>(new Optional<String>()
-        {
-            @Override
-            public boolean isPresent()
-            {
-                fail("isPresent called");
-                return false;
-            }
-
-
-            @Override
-            public String value(String defaultValue)
-            {
-                fail("value called");
-                return null;
-            }
-
-
-            @Override
-            public String value() throws NoSuchElementException
-            {
-                fail("value called");
-                return null;
-            }
-
-
-            @Override
-            public int hashCode()
-            {
-                return 123456;
-            }
-        }).hashCode(), is(123456));
-    }
-
-
-    @Test
-    public void testEquals() throws Exception
-    {
-        final Object testObject = new Object();
-        assertThat(new TestOptional<>(new Optional<String>()
-        {
-            @Override
-            public boolean isPresent()
-            {
-                fail("isPresent called");
-                return false;
-            }
-
-
-            @Override
-            public String value(String defaultValue)
-            {
-                fail("value called");
-                return null;
-            }
-
-
-            @Override
-            public String value() throws NoSuchElementException
-            {
-                fail("value called");
-                return null;
-            }
-
-
-            @Override
-            public boolean equals(Object obj)
-            {
-                assertThat(obj, sameInstance(testObject));
-                return true;
-            }
-        }).equals(testObject), is(true));
-
-        assertThat(new TestOptional<>(new Optional<String>()
-        {
-            @Override
-            public boolean isPresent()
-            {
-                fail("isPresent called");
-                return false;
-            }
-
-
-            @Override
-            public String value(String defaultValue)
-            {
-                fail("value called");
-                return null;
-            }
-
-
-            @Override
-            public String value() throws NoSuchElementException
-            {
-                fail("value called");
-                return null;
-            }
-
-
-            @Override
-            public boolean equals(Object obj)
-            {
-                assertThat(obj, sameInstance(testObject));
-                return false;
-            }
-        }).equals(testObject), is(false));
-    }
-
-
-    @Test
-    public void testToString() throws Exception
-    {
-        final String testString = "testing";
-        assertThat(new TestOptional<>(new Optional<String>()
-        {
-            @Override
-            public boolean isPresent()
-            {
-                fail("isPresent called");
-                return false;
-            }
-
-
-            @Override
-            public String value(String defaultValue)
-            {
-                fail("value called");
-                return null;
-            }
-
-
-            @Override
-            public String value() throws NoSuchElementException
-            {
-                fail("value called");
-                return null;
-            }
-
-
-            @Override
-            public String toString()
-            {
-                return testString;
-            }
-        }).toString(), sameInstance(testString));
-
-    }
-
+    
 
     private final class TestOptional<T> extends DelegatingOptional<T>
     {
