@@ -24,6 +24,7 @@ import org.dmfs.optional.Present;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.emptyIterable;
 import static org.junit.Assert.assertThat;
 
 
@@ -55,4 +56,15 @@ public final class PresentValuesTest
         assertThat(result, contains("1", "2", "3"));
     }
 
+
+    @Test
+    public void testCtors()
+    {
+        assertThat(new PresentValues<>(), emptyIterable());
+        assertThat(new PresentValues<>(Absent.absent()), emptyIterable());
+        assertThat(new PresentValues<>(new Present<>("test")), contains("test"));
+        assertThat(new PresentValues<>(new Present<>("1"), new Present<>("2")), contains("1", "2"));
+        assertThat(new PresentValues<>(Absent.<String>absent(), Absent.<String>absent(), Absent.<String>absent(), new Present<>("1"), new Present<>("2")),
+                contains("1", "2"));
+    }
 }

@@ -17,6 +17,7 @@
 
 package org.dmfs.optional.iterable;
 
+import org.dmfs.iterables.ArrayIterable;
 import org.dmfs.optional.Optional;
 
 import java.util.Iterator;
@@ -26,10 +27,25 @@ import java.util.Iterator;
  * {@link Iterable} that iterates over the present values from the input {@link Iterable} of {@link Optional}s of {@code E}.
  *
  * @author Gabor Keszthelyi
+ * @author Marten Gajda
  */
 public final class PresentValues<E> implements Iterable<E>
 {
     private final Iterable<Optional<E>> mOptionals;
+
+
+    public PresentValues(Optional<E> optional)
+    {
+        // TODO: replace with `SingletonIterable` once available
+        this(new ArrayIterable<>(optional));
+    }
+
+
+    @SafeVarargs
+    public PresentValues(Optional<E>... optionals)
+    {
+        this(new ArrayIterable<>(optionals));
+    }
 
 
     public PresentValues(Iterable<Optional<E>> optionals)
