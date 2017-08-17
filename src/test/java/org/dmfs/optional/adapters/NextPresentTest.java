@@ -46,8 +46,6 @@ public final class NextPresentTest
     {
         assertThat(new NextPresent<>(new ArrayIterator<Optional<String>>()), isAbsent());
 
-        assertThat(new NextPresent<>(new ArrayIterator<Optional<String>>()), isAbsent());
-
         assertThat(new NextPresent<>(new ArrayIterator<Optional<String>>(ABSENT)), isAbsent());
         assertThat(new NextPresent<>(new ArrayIterator<Optional<String>>(ABSENT, ABSENT)), isAbsent());
 
