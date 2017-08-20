@@ -1,3 +1,5 @@
+# This repo is abandoned, the module has been moved into [dmfs/jems](https://github.com/dmfs/jems)
+
 [![Build Status](https://travis-ci.org/dmfs/optional.svg?branch=master)](https://travis-ci.org/dmfs/optional)
 
 # Optional
